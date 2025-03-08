@@ -6,8 +6,9 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Initialize Firebase Admin SDK
-const serviceAccount = require("./serviceAccountKey.json");
+// Initialize Firebase Admin SDK with Base64-decoded key
+const serviceAccount = JSON.parse(Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT, 'base64').toString('utf8'));
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 });
